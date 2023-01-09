@@ -99,7 +99,7 @@ Configuring motherboard (rev B, var A)...
 Configuring FPGA from file \MB\HBI0364B\io_v010f.bit
 Address: 0x00240000
 ```
-It should update the firmware for us.
+It will reboot several times and will update. you can watch it happening from the MCC (serial 0).
 
 ## Updating CheriBSD
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with a little more detail.
