@@ -3,12 +3,25 @@ My notes on setting up the Morello CHERI board with CheriBSD, upgrading it and v
 
 # Initial Setup and Install
 ## Things You Need to Know!
+### General Setup
 - Some instructions come with the Morello Cheri board. They are pretty confusing and will make your life difficult. For those of us on the DSbD program, we are suopposed to be trying to create things with the Morello Cheri rather than actively contributing to the development of it and building the OS, etc. We are better off using one of teh pre-built OS images to start with.
+- There are no SPI, I2C or serial ports. If you were hoping to do some clever embedded interfacing then you'd better hope that you can do it all via USB. Thi will be easier if you use Android or Linux - FreeBSD and, by extension, CheriBSD aren't so well supported on the drivers for periphiperals from. We were trying to find a USB to CAN device that was supported by FreeBSD and ended up having to use [libusb](https://libusb.info/) (which had it's own problems).
+### Operating Systems
 - There are three pre-built OS available:
- - CheriBSD - A CHERIfied version of FreeBSD. This is the most developed, most complete and the only one I've played with.
- - Android - I haven't tried this
- - Linux - I haven't tried this either.
+1. CheriBSD - A CHERIfied version of FreeBSD. This is the most developed, most complete and the only one I've played with.
+2. Android - I haven't tried this
+3. Linux - I haven't tried this either.
 - I used the guide [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/cover/index.html) and added my own notes as I went along to create this.
+### CheriBSD
+- [CheriBSD](https://www.cheribsd.org/) is a "cherified" version of [FreeBSD](https://www.freebsd.org/)
+- CheriBSD can be run in four different ways. There are two builds:
+1. Hybrid
+2. Pure-Capabilities
+- Addtionally each build has two kernels:
+1. Hybrid
+2. Pure-Capabilities
+- Using the Hybrid versions of both is the most likely to work but doesn't give you much in the way of additional protection.
+- I used the Pure-Capabilities ABI with the Hybrid Kernel (the dfeault) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
 
 # Upgrading from V22.05 to V22.12
 First we need to update the firmware on the Morello board.
@@ -57,10 +70,36 @@ ee0364b.txt
 7. We need to unmount the USB to ensure that it has finished syncing before we reboot (You could execute `sync` from the shell on the device that you're copying from. It is still suggested to unmount the device even after a sync). Unbuntu's Files has an unmount option for these drives so use that.
 8. Now we return to the MCC (serial 0) and we reboot the Morello:
 ```
-Cmd reboot
-Rebooting...
-Disabling debug USB..
+Cmd> reboot
+
+Powering up system...
+
+MCC to access SD card request acknowledged.
+Clear ULINK JTAG
+
+Time :  16:59:58
+Date :  09:01:2023
+
+Switching on ATXPSU...
+Switching on main power...
+
+12V Rail Check Pass
+
+Reading Board File \MB\HBI0364B\io_v010f.txt
+TOTAL OSCCLKS: 15
+PMIC RAM configuration (80_1_86G.bin)...
+
+Temperature (deg C)
+Outlet = 25.4 PMIC   = 27.9 SoC = 27.4 IN2  = 26.9 IN1 = 27.9
+MidBrd = 27   PCIeSW = 24   MCC = 30.3 FPGA = 27.9 SoC Fan Speed = 9%
+ALERT off
+
+Configuring motherboard (rev B, var A)...
+
+Configuring FPGA from file \MB\HBI0364B\io_v010f.bit
+Address: 0x00240000
 ```
+It should update the firmware for us.
 
 ## Updating CheriBSD
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with a little more detail.
