@@ -23,6 +23,70 @@ My notes on setting up the Morello CHERI board with CheriBSD, upgrading it and v
 - Using the Hybrid versions of both is the most likely to work but doesn't give you much in the way of additional protection.
 - I used the Pure-Capabilities ABI with the Hybrid Kernel (the dfeault) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
 
+## Connecting to the Morello Board
+The Morello board has a USB type B connectopr on it. Connect from that to a PC runnnign WIndows or Linux (I use Ubuntu with a GUI) and you will find that it adds 4 serial ports and the USB drive.
+
+### The USB Drive
+The USB drive is an onboard Sd card on teh Morello. It is used to upgrade teh frimware on teh Morello board (which you should always do before installing an OS). The drive is called `M1SDP`.
+
+### The Serial Ports
+The actual names of teh serial ports will depend upon your OS. On Ubuntu they are called `/dev/ttyUSB0` to `/dev/ttyUSB3`. On *NIX systems like Linux and FreeBSD you may need to add your user to teh `dialer` group in order to access teh serial ports. The serial ports are all run at `115200` buad, 8 data bits, 1 stop bit, No parity and XON/XOFF flowcontrol.
+
+#### Serial Port 0 - MCC
+The is the MCC Morello Management Controller. We can use this to set teh clock, reboot independant of teh OS and it is where we can see the firmware updates fro teh Morello board being applied.
+
+### Serial Port 1 - PCC
+I have no idea what this is used for. Some form of debugging.
+
+### Serial Port 2 - Morello System Console
+This is where we will be able to access our CheriBSD installation's console. remember that some of teh CheriBSD builds don't have a driver for teh HDMI yet (fixed from V22.12 but there are reports of isseus still).
+
+### Serial port 3 - ?
+I've never used it.
+
+# CheriBSD Notes
+1. If you have a USB hub plugged when booting it causes an error that looks like this:
+```
+    _____ _               _ ____   _____ _____
+   / ____| |             (_)  _ \ / ____|  __ \
+  | |    | |__   ___ _ __ _| |_) | (___ | |  | |
+  | |    | '_ \ / _ \ '__| |  _ < \___ \| |  | |
+  | |____| | | |  __/ |  | | |_) |____) | |__| |
+   \_____|_| |_|\___|_|  |_|____/|_____/|_____/
+                                                 ```                        `
+                                                s` `.....---.......--.```   -/
+ /---------- Welcome to CheriBSD ----------\    +o   .--`         /y:`      +.
+ |                                         |     yo`:.            :o      `+-
+ |  1. Boot Multi user [Enter]             |      y/               -/`   -o/
+ |  2. Boot Single user                    |     .-                  ::/sy+:.
+ |  3. Escape to loader prompt             |     /                     `--  /
+ |  4. Reboot                              |    `:                          :`
+ |  5. Cons: Serial                        |    `:                          :`
+ |                                         |     /                          /
+ |  Options:                               |     .-                        -.
+ |  6. Kernel: default/kernel (1 of 2)     |      --                      -.
+ |  7. Boot Options                        |       `:`                  `:`
+ |                                         |         .--             `--.
+ |                                         |            .---.....----.
+ \-----------------------------------------/
+   Autoboot in 0 seconds. [Space] to pause
+
+Loading kernel...
+/boot/kernel/kernel text=0x2e0 text=0x858890 text=0x24a9b8 text=0x30 data=0x2631
+e0 data=0x0+0x357d50 0x8+0x11ba28+0x8+0xe9165
+Loading configured modules...
+/etc/hostid size=0x25
+/boot/entropy size=0x1000
+No valid device tree blob found!
+WARNING! Trying to fire up the kernel, but no device tree blob found!
+EFI framebuffer information:
+addr, size     0xfe000000, 0x7e9000
+dimensions     1920 x 1080
+stride         1920
+masks          0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000
+```
+To work around this, unplug the USB devcies and reboot (you can execute a `reboot` from the MCC console).
+
 # Upgrading from V22.05 to V22.12
 First we need to update the firmware on the Morello board.
 
@@ -103,3 +167,10 @@ It will reboot several times and will update. you can watch it happening from th
 
 ## Updating CheriBSD
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with a little more detail.
+1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/)
+2. IMPORTANT! If you haven't yet updated the firmware of the Morello board go back and do that now.
+3. Write the disk image that you've downloaded onto an SD card. Ubuntu has a UI for this if you just click the file. Otherwise you can do it from the console by executing something like this (change DISK to teh name of your USB stick):
+```
+dd if=cheribsd-memstick-arm64-aarch64c-22.12.img of=/dev/DISK bs=1048576
+```
+4. 
