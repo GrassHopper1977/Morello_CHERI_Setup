@@ -169,8 +169,203 @@ It will reboot several times and will update. you can watch it happening from th
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with a little more detail.
 1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/)
 2. IMPORTANT! If you haven't yet updated the firmware of the Morello board go back and do that now.
-3. Write the disk image that you've downloaded onto an SD card. Ubuntu has a UI for this if you just click the file. Otherwise you can do it from the console by executing something like this (change DISK to teh name of your USB stick):
+3. Write the disk image that you've downloaded onto an SD card. Ubuntu has a UI for this if you just click the file. Otherwise you can do it from the console by executing something like this (change DISK to the name of your USB stick):
 ```
 dd if=cheribsd-memstick-arm64-aarch64c-22.12.img of=/dev/DISK bs=1048576
 ```
-4. 
+4. Now put the USB stick into the Morello (unplug any other USB devices) and reboot the machine (use the MMC and enter `reboot`).
+5. After a short time the Morello console (serial port 2) will display
+```
+Press ESCAPE for boot options .....
+```
+6. At this point you should press escape and teh Boot Manager will load:
+```
+
+ Morello System Development Platform
+ Morello-R0P1                                        2.50 GHz
+ EDK II                                              16352 MB RAM
+
+
+
+   Select Language            <Standard English>         This is the option
+                                                         one adjusts to change
+ > Device Manager                                        the language for the
+ > Boot Manager                                          current system
+ > Boot Maintenance Manager
+
+   Continue
+   Reset
+
+
+
+
+
+
+
+  ^v=Move Highlight       <Enter>=Select Entry
+```
+7. Use the arrow keys to select `Boot Manager` then press Enter.
+8. Use the arrow keys to select your USB stick then press Enter
+9. Now we get teh CheriBSD splash screen. Yiou can wait for it to count down or just press Enter to skip the countdown. Yo may also get teh same output on a screen connected to the HDMI - it's best to stick to the serial port as this is well documented as working.
+```
+   _____ _               _ ____   _____ _____
+   / ____| |             (_)  _ \ / ____|  __ \
+  | |    | |__   ___ _ __ _| |_) | (___ | |  | |
+  | |    | '_ \ / _ \ '__| |  _ < \___ \| |  | |
+  | |____| | | |  __/ |  | | |_) |____) | |__| |
+   \_____|_| |_|\___|_|  |_|____/|_____/|_____/
+                                                 ```                        `
+                                                s` `.....---.......--.```   -/
+ /---------- Welcome to CheriBSD ----------\    +o   .--`         /y:`      +.
+ |                                         |     yo`:.            :o      `+-
+ |  1. Boot Installer [Enter]              |      y/               -/`   -o/
+ |  2. Boot Single user                    |     .-                  ::/sy+:.
+ |  3. Escape to loader prompt             |     /                     `--  /
+ |  4. Reboot                              |    `:                          :`
+ |  5. Cons: Serial                        |    `:                          :`
+ |                                         |     /                          /
+ |  Options:                               |     .-                        -.
+ |  6. Kernel: default/kernel (1 of 1)     |      --                      -.
+ |  7. Boot Options                        |       `:`                  `:`
+ |                                         |         .--             `--.
+ |                                         |            .---.....----.
+ \-----------------------------------------/
+   Autoboot in 8 seconds. [Space] to pause
+```
+10. Various boot log messages will appear.
+11. You will be asked to choose your console type:
+```
+Welcome to FreeBSD!
+
+Please choose the appropriate terminal type for your system.
+Common console types are:
+   ansi     Standard ANSI terminal
+   vt100    VT100 or compatible terminal
+   xterm    xterm terminal emulator (or compatible)
+
+Console type [xterm]:
+```
+12. It is safe to just hit enter and accept `xterm`.
+13. You're now into the FreeBSD Installer.
+14. At this screen press Enter:
+```
+
+                                                          lqqqqqqqqqqqquWelcometqqqqqqqqqqqk
+                                                          x Welcome to FreeBSD! Would you  x
+                                                          x like to begin an installation  x
+                                                          x or use the live CD?            x
+                                                          tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                                          x  [Install] [ Shell ] [Live CD] x
+                                                          mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+
+```
+15. Choose the required keyboard type from the list using the arrow keys and Enter.
+16. The screen will jump back to teh top of teh menu and offer you teh chance to test the keyboard map. You can test it or just select the option above and choose `Continue with uk.kbd keymap`.
+17. You are asked to name your machine. Give it a suitable name and press Enter.
+18. In the Partitioning options select `Auto (UFS)` and press enter
+19. Select `Entire Disk` and press Enter.
+20. Select `Yes` to confirm that you are erasing the whole disk.
+21. It will show you the proposed partition scheme. Just select `Finish` and press Enter.
+22. Select `Commit` and press Enter to continue.
+23. Now a long installation process happens. Lots of waiting...
+24. If you are upgrading you may receive the following message:
+```
+lqqqqqBoot Configurationqqqqqqqqk
+x There are multiple "FreeBSD"  x
+x EFI boot entries. Would you   x
+x like to remove them all and   x
+x add a new one?                x
+tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+x     < Yes >   < No >          x
+mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+```
+Just select Yes and press Enter
+25. You will be asked to create the root password. Choose a suitable password and save it in a password manager so you don't lose it.
+26. You will be asked if you want to configur ethe Ethernet networking. I would suggest that you do. Select `OK` and press Enter.
+27. Would you like to configure IPv4 for this interface? Select `Yes` and press Enter.
+28. Would you like to use DHCP to configure this interface? Select `Yes` and press Enter.
+29. Would you like to configure IPv6 for this interface? Select `Yes` and press Enter.
+30. Would you like to try stateless address autoconfiguration (SLAAC)? Select `Yes` and press Enter.
+31. There will be a box with Resolver Configuration in it.
+```
+                                        lqqqqqqqqqqqqqqqqqqqqqqquNetwork Configurationtqqqqqqqqqqqqqqqqqqqqqqqk
+                                        x Resolver Configuration                                              x
+                                        x lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk x
+                                        x xSearch         home                                              x x
+                                        x xIPv6 DNS #1    fe80::d686:60ff:fe99:5371%re0                     x x
+                                        x xIPv6 DNS #2                                                      x x
+                                        x xIPv4 DNS #1    192.168.1.254                                     x x
+                                        x xIPv4 DNS #2                                                      x x
+                                        x mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj x
+                                        tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                        x                        [  OK  ]     [Cancel]                        x
+                                        mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+
+```
+32. Select `OK` and press Enter.
+33. is teh system clock set to UTC? Select `Yes` and press Enter.
+34. Select a region. I'm in Europe so I select that with the arrow keys and press Enter.
+35. Now we're asked to choose a country. I use teh arrow keys to select `United Kingdom of Great Britain and Northern Ireland` and press Enter.
+36. `Does teh abbreviation 'GMT look reasonable?` Yes, that is my timezone so I select `Yes` and press Enter.
+37. Double check the date is correct. Mine is so I select `Skip` and press Enter.
+38. Double check the time is correct. Mine is so I select `Skip` and press Enter.
+39. We're offered this screen:
+```
+
+                                    lqqqqqqqqqqqqqqqqqqqqqqqqqqquSystem Configurationtqqqqqqqqqqqqqqqqqqqqqqqqqqqk
+                                    x Choose the services you would like to be started at boot:                  x
+                                    x lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk x
+                                    x x[ ] local_unbound      Local caching validating resolver                x x
+                                    x x[X] sshd               Secure shell daemon                              x x
+                                    x x[ ] moused             PS/2 mouse pointer on console                    x x
+                                    x x[ ] ntpd               Synchronize system and network time              x x
+                                    x x[ ] ntpd_sync_on_start Sync time on ntpd startup, even if offset is highx x
+                                    x x[ ] powerd             Adjust CPU frequency dynamically if supported    x x
+                                    x x[X] dumpdev            Enable kernel crash dumps to /var/crash          x x
+                                    x x[ ] debugger_on_panic  Run debugger on kernel panic                     x x
+                                    x mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj x
+                                    tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                    x                                  [  OK  ]                                  x
+                                    mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+```
+40. We can select any additional services that we would like using the arrow keys and pressing the space bar. I have selected `ntp`, `nptd_sync_on_start` and `debugger_on_panic`. Then press Enter to accept the choices.
+41. Add User Accounts This is important if you're going to use the CHERI Desktop Environment. I'm going to install it so I create 1 additional user, accepting all the defaults and setting a password. You cannot log into the Desktop environment as the root user so you should add another user here.
+42. New for V22.12! You must be online to install this and it could take a long time to finish.
+```
+                                                          lqqqqqqqqquCHERI Desktoptqqqqqqqqk
+                                                          x Would you like to install the  x
+                                                          x CHERI desktop environment      x
+                                                          x (requires network)?            x
+                                                          tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                                          x      [ Yes  ]     [  No  ]     x
+                                                          mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+```
+43. I select `Yes` and press Enter. This is the perfect time to go and get a drink as it will take a little while to finish...
+44. If you're installing the CHERI Desktop Environment you won't be able to log in as root. You will need to set your additonal users to be members of the `video` group. You will be asked to select which user you want to add to teh group. Use arrow keys and space to select the users and then and press enter.
+```
+
+                                                      lqqqqqqqqqqqqquCHERI Desktoptqqqqqqqqqqqqqk
+                                                      x Users must be in the video group to log x
+                                                      x in to a desktop environment. Choose any x
+                                                      x additional users to add to the group:   x
+                                                      x lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk x
+                                                      x x            [ ] Alan Alan            x x
+                                                      x mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj x
+                                                      tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                                      x                [  OK  ]                 x
+                                                      mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+```
+46. Final Configuration - You're offered the chance to change anything you've done. You can use the arrow keys and space to select from the menu. If you have nothing to change then just press Enter.
+47. Manual Configuration - Do we want to drop to the shell and make any extra changes. We don't so select `No` to press Enter.
+48. Complete. Note: DO NOT remove the USB stick just yet (I did that on a FreeBSD install once and it trashed everything!)
+```
+                                                         lqqqqqqqqqqqquCompletetqqqqqqqqqqqqqk
+                                                         x Installation of FreeBSD complete! x
+                                                         x Would you like to reboot into the x
+                                                         x installed system now?             x
+                                                         tqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu
+                                                         x [ Reboot ] [Shutdown] [Live CD ]  x
+                                                         mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+```
+Select `Reboot` and press Enter.
+49. Now that you've pressed Enter you can safely remove the USB stick. It is possible that it won't reboot on it's own. Wait until you get teh message about your uptime - after that you can safely force the reboot from the MCC (serial port 0) by typing `reboot`.
