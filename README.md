@@ -39,13 +39,27 @@ The is the MCC Morello Management Controller. We can use this to set teh clock, 
 I have no idea what this is used for. Some form of debugging.
 
 ### Serial Port 2 - Morello System Console
-This is where we will be able to access our CheriBSD installation's console. remember that some of teh CheriBSD builds don't have a driver for teh HDMI yet (fixed from V22.12 but there are reports of isseus still).
+This is where we will be able to access our CheriBSD installation's console. Remember that some of teh CheriBSD builds don't have a driver for teh HDMI yet (fixed from V22.12 but there are reports of isseus still).
 
 ### Serial port 3 - ?
 I've never used it.
 
 # CheriBSD Notes
-1. If you have a USB hub plugged when booting it causes an error that looks like this:
+## Gotchas - Purecaps
+### I've Installed the Purecaps Build so Everyhting is Secured
+No, it's not. If you use teh default kernel on the Pure-Caps build then you are still using the Hybris Kernel. You will need to change the kernel during the boot.
+### I'm Using Purecaps So I Can't Compile or Run Hybrid Code
+No, that's not true. Both builds can run with eitehr kernel and can run code built for either kernel.
+### Some of My Code Doesn't Work When Built for Purecaps but Works on Hybrid so My Code Is Wrong!
+Maybe not - this can happen for a number of reasons. Often, it is tempting to blame our code. I like to try my code out on a separate FreeBSD machine first and then I test it on Pure-Caps and Hybrid.
+### I Can Compare Library Function Calls on hybrid and Pure-Cap Versions
+Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of teh whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on teh Slack channel first and then report it on GitHub.
+
+# Issues and Work Arounds
+## Booting with a Different Kernel
+
+## CheriBSD Won't Boot!
+If you have a USB hub plugged when booting it causes an error that looks like this:
 ```
     _____ _               _ ____   _____ _____
    / ____| |             (_)  _ \ / ____|  __ \
@@ -88,11 +102,13 @@ masks          0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000
 To work around this, unplug the USB devcies and reboot (you can execute a `reboot` from the MCC console).
 
 # Upgrading from V22.05 to V22.12
+To perform an upgrade I just went through a full installtion again. I updated the notes on Installing CheriBSD to reflect the V22.12.
+
+# Installing CheriBSD
 First we need to update the firmware on the Morello board.
 
-
 ## Upgrade the Morello Firmware
-We follow the basic instructions from here [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-firmware/index.html) but with a little more detail.
+We follow the basic instructions from here [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-firmware/index.html) but with my own notes. The instruction on upgrading teh firmware are a little unclear so I've clarified a few points here.
 1. Use the MCC (port 0 - the first serial port) to double check that the clock is correct (mine had drifted badly).
 
 ```
@@ -165,8 +181,8 @@ Address: 0x00240000
 ```
 It will reboot several times and will update. you can watch it happening from the MCC (serial 0).
 
-## Updating CheriBSD
-We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with a little more detail.
+## Installing CheriBSD
+We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with my own notes. The CheriBSD install instrcutions are much easier to follow than the ARM firmware instructions.
 1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/)
 2. IMPORTANT! If you haven't yet updated the firmware of the Morello board go back and do that now.
 3. Write the disk image that you've downloaded onto an SD card. Ubuntu has a UI for this if you just click the file. Otherwise you can do it from the console by executing something like this (change DISK to the name of your USB stick):
