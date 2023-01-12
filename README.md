@@ -45,6 +45,9 @@ This is where we will be able to access our CheriBSD installation's console. Rem
 ### Serial port 3 - ?
 I've never used it.
 
+## Known Issue with Morello
+A list in maintained [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-issues/index.html).
+
 # CheriBSD Notes
 ## Gotchas - Purecaps
 ### I've Installed the Purecaps Build so Everyhting is Secured
@@ -56,8 +59,7 @@ Maybe not - this can happen for a number of reasons. Often, it is tempting to bl
 ### I Can Compare Library Function Calls on hybrid and Pure-Cap Versions
 Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of teh whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on teh Slack channel first and then report it on GitHub.
 
-## Known Issue with Morello
-A list in maintained [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-issues/index.html).
+
 
 ## How Do I use the Full-Caps Kernel?
 
