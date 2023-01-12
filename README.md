@@ -482,6 +482,8 @@ git clone <PATH TO REPO>
 `pkg64 install nano`
 #### 3. Install Compiler & Debugger
 `pkg64 install llvm-base`
+#### 4. (Optional) Install wget
+`pkg64 install wget`
 
 # Compiling on CheriBSD
 ## Notes
@@ -518,3 +520,7 @@ It's nothing complicated but I'll break down the commands here:
 - `-lusb` - Include the libusb library
 - `-o testusb_pc` - Sets teh name of the output file to `testusb_pc`
 - `testusb.c` - Source files.
+
+# Trying out a Custom Kernel
+1. Use `wget` to get the tar file onto our machine: `wget https://www.cl.cam.ac.uk/~jrtc4/kernel.UGEN-TEST.tar.xz`
+2. Now we need to unpack it into the root of our install:
