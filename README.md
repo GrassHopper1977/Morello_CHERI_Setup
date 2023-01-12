@@ -482,3 +482,39 @@ git clone <PATH TO REPO>
 `pkg64 install nano`
 #### 3. Install Compiler & Debugger
 `pkg64 install llvm-base`
+
+# Compiling on CheriBSD
+## Notes
+- GCC hasn't been built for CheriBSD yet so they are using `clang`.
+- There is a shell script called `cc` that builds the code for which ever ABI you are currently using. So on the Pure-caps build it will default to building pure-caps, on the hybrid build it will build hybrid code.
+- You can override and chose to build for either ABI from either OS build and using any of the kernels available.
+- Capabilities give you extra things to think about. If you're using a lot of structs then you may wish to include the additional `-cheri-bounds=subojbect-safe` option (TODO: explain why).
+## Compiling Code
+As mentioned the `cc` shell script builds for which ever OS build you are currently using. So if you execute:
+```
+cc -g -O2 -Wall -o hello hello.c
+```
+We can force it to build one way or another though. To force it to build in Hybrid mode:
+```
+cc -g -O2 -Wall -mabi=aapcs -o hello hello.c
+```
+To force it to build in Pure-Caps mode:
+```
+cc -g -O2 -Wall -mabi=purecap -o hello hello.c
+```
+I have found it useful to create a shell script to build both version at the same time. This is a my script to build both versions of some code I wrote to test libusb:
+```
+cc -v -g -O2 -Wall -mabi=aapcs -cheri-bounds=subobject-safe -lusb  -o testusb_hy testusb.c
+cc -v -g -O2 -Wall -mabi=purecap -cheri-bounds=subobject-safe -lusb  -o testusb_pc testusb.c
+```
+It's nothing complicated but I'll break down the commands here:
+- `cc` - the compiler shell script
+- `-v` - Verbose output (I find it useful but its' not essential)
+- `-g` - 
+- `-O2` - 
+- `-Wall` - Display all warnings
+- `-mabi=` - Is used to set the Application Binary Interface (for this machine it's `aapcs` for Hybrid mode and `purecap` for Pure-Caps mode)
+- `-cheri-bounds=subobject-safe`
+- `-lusb` - Include the libusb library
+- `-o testusb_pc` - Sets teh name of the output file to `testusb_pc`
+- `testusb.c` - Source files.
