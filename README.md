@@ -6,6 +6,7 @@ My notes on setting up the Morello CHERI board with CheriBSD, upgrading it and v
 ### General Setup
 - Some instructions come with the Morello Cheri board. They are pretty confusing and will make your life difficult. For those of us on the DSbD program, we are suopposed to be trying to create things with the Morello Cheri rather than actively contributing to the development of it and building the OS, etc. We are better off using one of teh pre-built OS images to start with.
 - There are no SPI, I2C or serial ports. If you were hoping to do some clever embedded interfacing then you'd better hope that you can do it all via USB. Thi will be easier if you use Android or Linux - FreeBSD and, by extension, CheriBSD aren't so well supported on the drivers for periphiperals from. We were trying to find a USB to CAN device that was supported by FreeBSD and ended up having to use [libusb](https://libusb.info/) (which had it's own problems).
+- Until V22.12 there was no desktop environment. There's not a lot of notes on using the desktop because of this fact.
 ### Operating Systems
 - There are three pre-built OS available:
 1. CheriBSD - A CHERIfied version of FreeBSD. This is the most developed, most complete and the only one I've played with.
@@ -55,8 +56,7 @@ Maybe not - this can happen for a number of reasons. Often, it is tempting to bl
 ### I Can Compare Library Function Calls on hybrid and Pure-Cap Versions
 Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of teh whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on teh Slack channel first and then report it on GitHub.
 
-# Issues and Work Arounds
-## Booting with a Different Kernel
+## How Do I use the Full-Caps Kernel?
 
 ## CheriBSD Won't Boot!
 If you have a USB hub plugged when booting it causes an error that looks like this:
@@ -102,7 +102,7 @@ masks          0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000
 To work around this, unplug the USB devcies and reboot (you can execute a `reboot` from the MCC console).
 
 # Upgrading from V22.05 to V22.12
-To perform an upgrade I just went through a full installtion again. I updated the notes on Installing CheriBSD to reflect the V22.12.
+To perform an upgrade I just went through a full installation again. I updated the notes on Installing CheriBSD to reflect the V22.12.
 
 # Installing CheriBSD
 First we need to update the firmware on the Morello board.
