@@ -385,3 +385,64 @@ Just select Yes and press Enter
 ```
 Select `Reboot` and press Enter.
 49. Now that you've pressed Enter you can safely remove the USB stick. It is possible that it won't reboot on it's own. Wait until you get teh message about your uptime - after that you can safely force the reboot from the MCC (serial port 0) by typing `reboot`.
+50. The boot menu will appear. Either wait for the timeout or press enter to boot in the default (Hybrid) kernel.
+```    _____ _               _ ____   _____ _____
+   / ____| |             (_)  _ \ / ____|  __ \
+  | |    | |__   ___ _ __ _| |_) | (___ | |  | |
+  | |    | '_ \ / _ \ '__| |  _ < \___ \| |  | |
+  | |____| | | |  __/ |  | | |_) |____) | |__| |
+   \_____|_| |_|\___|_|  |_|____/|_____/|_____/
+                                                 ```                        `
+                                                s` `.....---.......--.```   -/
+ /---------- Welcome to CheriBSD ----------\    +o   .--`         /y:`      +.
+ |                                         |     yo`:.            :o      `+-
+ |  1. Boot Multi user [Enter]             |      y/               -/`   -o/
+ |  2. Boot Single user                    |     .-                  ::/sy+:.
+ |  3. Escape to loader prompt             |     /                     `--  /
+ |  4. Reboot                              |    `:                          :`
+ |  5. Cons: Serial                        |    `:                          :`
+ |                                         |     /                          /
+ |  Options:                               |     .-                        -.
+ |  6. Kernel: default/kernel (1 of 4)     |      --                      -.
+ |  7. Boot Options                        |       `:`                  `:`
+ |                                         |         .--             `--.
+ |                                         |            .---.....----.
+ \-----------------------------------------/
+
+```
+51. It will go through the boot up procedure and then give you a login prompt. Now you can log in as one of teh users that you created or as the root user.
+```
+Thu Jan 12 08:54:03 GM
+CheriBSD/arm64 (cheribsd.local) (ttyu0)
+
+login: root
+Password:
+Jan 12 08:55:57 cheribsd login[926]: ROOT LOGIN (root) ON ttyu0
+FreeBSD 14.0-CURRENT #0 8993e1c3bba: Thu Dec 15 23:25:54 UTC 2022     jenkins@ctsrd-build-linux-xx:/local/scratch/jenkins/workspace/CheriBSD-pipeline_releng_22.12/cheribsd-morello-purecap-build/local/scratch/jenkins/workspace/CheriBSD-pipeline_releng_22.12/cheribsd/arm64.aarch64c/sys/GENERIC-MORELLO
+
+Welcome to CheriBSD!
+
+CheriBSD extends FreeBSD to implement memory protection and software
+compartmentalization features enabled by CHERI-extended CPUs.
+
+The CheriBSD front page:
+  https://www.cheribsd.org/
+
+We provide support via a mailing list:
+  https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-lists.html
+
+And also via the CHERI-CPU Slack:
+  https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-slack.html
+
+CheriBSD source may be found at:
+  https://github.com/CTSRD-CHERI/cheribsd/
+
+Find out more about about CHERI at https://cheri-cpu.org/
+
+WARNING: INVARIANTS kernel option defined, expect reduced performance
+WARNING: WITNESS kernel option defined, expect reduced performance
+root@cheribsd:~ #
+```
+
+=== Setting Up the Development Environment
+So you've installed CheriBSD but you want to write some code and commit changes to a repository so we're going to need to install the compiler and git and go through setting them all up.
