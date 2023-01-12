@@ -449,5 +449,36 @@ WARNING: WITNESS kernel option defined, expect reduced performance
 root@cheribsd:~ #
 ```
 
-### Setting Up the Development Environment
+## Preparing the Dev Environment
+Note: All of these instructions are entered into the CheriBSD console (serial port 2).
+
+### Notes on Installing Packages
+There's a detaailed description of the packages and how they work [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/packages/index.html) but here's a simplified version.
+Normally you would install 3rd party packages using `pkg`. CheriBSD doesn't have `pkg` yet instead it has two different package managers:
+1. pkg64 - This is used to install Hybrid ABI packages. This are almost identical to the FreeBSD packages. Tehy do not have the improvements in memory protection or software compartmentalisation.
+2. pkg64c - This are teh Cheri ABI packages. This have been built with the extra protections that Cheri provides. They may have errors and are consodered experimental. There's till a lot of packages to be converted to Cheri though.
+
+### So Which Package Manager Do I Use?
+#### CheriABI (`pkg64c`)
+If teh package is being used for my program then I try to use the CheriABI (so use `pkg64c`) packages first. If they don't exist or I have issues then I switch to the Hybrid BI version (using `pkg64` instead). Almost everything I'm doign is experimental anyway, so this would seem to make sense.
+#### Hybrid ABI (`pkg64`)
+If teh package is just a background task or it is critical that it works (e.g. `nano` or `git`) then I'll use teh Hybrid version as it is more likely to be safe.
+
+### Installing Packages That You Need
 So you've installed CheriBSD but you want to write some code and commit changes to a repository so we're going to need to install the compiler and git and go through setting them all up.
+
+#### 1. Install GIT
+1. Enter this `pkg64 install git`
+2. If you have some code on GitHub to check out then, you may wish to save your GitHub credentials locally on the machine (my machine is behind a firewall and therefor reasonably safe). The best way to do this is to create a personal access token to use instead of a password.
+3. Instructions for creating a personal access token can be found [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+4. From your account (or root) home directory:
+```
+mkdir github
+cd github
+git clone <PATH TO REPO>
+```
+5. When prompted enter your username and use your personal Access Token for the password.
+#### 2. Install nano
+`pkg64 install nano`
+#### 3. Install Compiler & Debugger
+`pkg64 install llvm-base`
