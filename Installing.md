@@ -1,8 +1,8 @@
-# Installing CheriBSD
-First we need to update the firmware on the Morello board.
+# Installing Morello CheriBSD
+First we need to update the firmware on the Morello board and then we will install CheriBSD.
 
-## Upgrade the Morello Firmware
-We follow the basic instructions from here [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-firmware/index.html) but with my own notes. The instruction on upgrading teh firmware are a little unclear so I've clarified a few points here.
+# Upgrade the Morello Firmware
+We follow the basic instructions from here [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-firmware/index.html) but with my own notes. The instruction on upgrading the firmware are a little unclear so I've clarified a few points here.
 1. Use the MCC (port 0 - the first serial port) to double check that the clock is correct (mine had drifted badly).
 
 ```
@@ -26,7 +26,7 @@ Debug> exit
 
 2. Download the [prebuilt firmware images from ARM via the Morello GitLab instance](https://git.morello-project.org/morello/board-firmware). Download the whole directory as a zip (or tar, if you prefer).
 3. Unzip the files (Windows can do this by right clicking on the archive, on Ubuntu you can use the Archive Manager).
-4. Now we're going to copy teh files into place on the Merllo's internal 2GB card. I like to ensure that CheriBSD is shutdown safely before I mess with these things. If your CheriBSD is still runnning then connect to it (port 2 - the third serial port) and tell it to shutdown safely.
+4. Now we're going to copy the files into place on the Merllo's internal 2GB card. I like to ensure that CheriBSD is shutdown safely before I mess with these things. If your CheriBSD is still runnning then connect to it (port 2 - the third serial port) and tell it to shutdown safely.
 ```
 shutdown -p now
 ```
@@ -75,7 +75,7 @@ Address: 0x00240000
 ```
 It will reboot several times and will update. you can watch it happening from the MCC (serial 0).
 
-## Installing CheriBSD
+# Installing CheriBSD
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with my own notes. The CheriBSD install instrcutions are much easier to follow than the ARM firmware instructions.
 1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/)
 2. IMPORTANT! If you haven't yet updated the firmware of the Morello board go back and do that now.
@@ -338,25 +338,25 @@ WARNING: WITNESS kernel option defined, expect reduced performance
 root@cheribsd:~ #
 ```
 
-## Preparing the Dev Environment
+# Preparing the Dev Environment
 Note: All of these instructions are entered into the CheriBSD console (serial port 2).
 
-### Notes on Installing Packages
+## Notes on Installing Packages
 There's a detaailed description of the packages and how they work [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/packages/index.html) but here's a simplified version.
 Normally you would install 3rd party packages using `pkg`. CheriBSD doesn't have `pkg` yet instead it has two different package managers:
 1. pkg64 - This is used to install Hybrid ABI packages. This are almost identical to the FreeBSD packages. Tehy do not have the improvements in memory protection or software compartmentalisation.
 2. pkg64c - This are teh Cheri ABI packages. This have been built with the extra protections that Cheri provides. They may have errors and are consodered experimental. There's till a lot of packages to be converted to Cheri though.
 
-### So Which Package Manager Do I Use?
-#### CheriABI (`pkg64c`)
-If teh package is being used for my program then I try to use the CheriABI (so use `pkg64c`) packages first. If they don't exist or I have issues then I switch to the Hybrid BI version (using `pkg64` instead). Almost everything I'm doign is experimental anyway, so this would seem to make sense.
-#### Hybrid ABI (`pkg64`)
-If teh package is just a background task or it is critical that it works (e.g. `nano` or `git`) then I'll use teh Hybrid version as it is more likely to be safe.
+## So Which Package Manager Do I Use?
+### CheriABI (`pkg64c`)
+If the package is being used for my program then I try to use the CheriABI (so use `pkg64c`) packages first. If they don't exist or I have issues then I switch to the Hybrid BI version (using `pkg64` instead). Almost everything I'm doign is experimental anyway, so this would seem to make sense.
+### Hybrid ABI (`pkg64`)
+If the package is just a background task or it is critical that it works (e.g. `nano` or `git`) then I'll use the Hybrid version as it is more likely to be safe.
 
-### Installing Packages That You Need
+## Installing Packages That You Need
 So you've installed CheriBSD but you want to write some code and commit changes to a repository so we're going to need to install the compiler and git and go through setting them all up.
 
-#### 1. Install GIT
+### 1. Install GIT
 1. Enter this `pkg64 install git`
 2. If you have some code on GitHub to check out then, you may wish to save your GitHub credentials locally on the machine (my machine is behind a firewall and therefor reasonably safe). The best way to do this is to create a personal access token to use instead of a password.
 3. Instructions for creating a personal access token can be found [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
@@ -367,9 +367,9 @@ cd github
 git clone <PATH TO REPO>
 ```
 5. When prompted enter your username and use your personal Access Token for the password.
-#### 2. Install nano
+### 2. Install nano
 `pkg64 install nano`
-#### 3. Install Compiler & Debugger
+### 3. Install Compiler & Debugger
 `pkg64 install llvm-base`
-#### 4. (Optional) Install wget
+### 4. (Optional) Install wget
 `pkg64 install wget`
