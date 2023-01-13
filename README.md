@@ -1,10 +1,6 @@
 # Morello CHERI Setup with FreeBSD
 My notes on setting up the Morello CHERI board with CheriBSD, upgrading it and various things I've noticed.
 
-# Index
-1. [Installing CheriBSD on Morello](installing.md) - My full instructions for installing CheriBSD on Morello.
-2. 
-
 # CheriBSD and Morello Hardware
 If you are planning on integrating with external devices you should note:
 - There are no physical serial ports (although USB to serial works)
