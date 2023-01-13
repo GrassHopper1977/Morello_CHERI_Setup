@@ -512,8 +512,8 @@ cc -v -g -O2 -Wall -mabi=purecap -cheri-bounds=subobject-safe -lusb  -o testusb_
 It's nothing complicated but I'll break down the commands here:
 - `cc` - the compiler shell script
 - `-v` - Verbose output (I find it useful but its' not essential)
-- `-g` - 
-- `-O2` - 
+- `-g` - Generate debug information
+- `-O2` - Optimisation level. This is a moderate optimisation level. See [here](https://www.freebsd.org/cgi/man.cgi?query=clang&sektion=1) for more details on this option.
 - `-Wall` - Display all warnings
 - `-mabi=` - Is used to set the Application Binary Interface (for this machine it's `aapcs` for Hybrid mode and `purecap` for Pure-Caps mode)
 - `-cheri-bounds=subobject-safe`
@@ -522,5 +522,45 @@ It's nothing complicated but I'll break down the commands here:
 - `testusb.c` - Source files.
 
 # Trying out a Custom Kernel
-1. Use `wget` to get the tar file onto our machine: `wget https://www.cl.cam.ac.uk/~jrtc4/kernel.UGEN-TEST.tar.xz`
-2. Now we need to unpack it into the root of our install:
+1. Navigate to our home directory: `cd ~`
+2. Use `wget` to get the tar file onto our machine: `wget https://www.cl.cam.ac.uk/~jrtc4/kernel.UGEN-TEST.tar.xz`
+3. Navigate to the root of teh file system: `cd /`
+4. Now we need to unpack it into the root of our install: `tar -xf ~/kernel.UGEN-TEST-tar-xz`
+5. Now we can try rebooting and loading teh new kernel, which shoudl be called 1kernel.UGEN-TEST`
+6. Enter `shutdown -r now` (don't forget to unplug any USB devices before rebooting)
+7. Wait for the CheriBSD Boot Menu:
+```
+|   _____ _               _ ____   _____ _____
+   / ____| |             (_)  _ \ / ____|  __ \
+  | |    | |__   ___ _ __ _| |_) | (___ | |  | |
+  | |    | '_ \ / _ \ '__| |  _ < \___ \| |  | |
+  | |____| | | |  __/ |  | | |_) |____) | |__| |
+   \_____|_| |_|\___|_|  |_|____/|_____/|_____/
+                                                 ```                        `
+                                                s` `.....---.......--.```   -/
+ /---------- Welcome to CheriBSD ----------\    +o   .--`         /y:`      +.
+ |                                         |     yo`:.            :o      `+-
+ |  1. Boot Multi user [Enter]             |      y/               -/`   -o/
+ |  2. Boot Single user                    |     .-                  ::/sy+:.
+ |  3. Escape to loader prompt             |     /                     `--  /
+ |  4. Reboot                              |    `:                          :`
+ |  5. Cons: Serial                        |    `:                          :`
+ |                                         |     /                          /
+ |  Options:                               |     .-                        -.
+ |  6. Kernel: default/kernel (1 of 5)     |      --                      -.
+ |  7. Boot Options                        |       `:`                  `:`
+ |                                         |         .--             `--.
+ |                                         |            .---.....----.
+ \-----------------------------------------/
+```
+8. Press space to stop the countdown.
+9. Press 6 until teh kernel option reads: `6. Kernel: kernel.UGEN-TEST (5 of 5)`
+10. Now press enter to continue the boot sequence.
+11. Log in
+12. Use uname to check that we are running the new kernel:
+```
+root@cheribsd:~ # uname -a
+FreeBSD cheribsd.local 14.0-CURRENT FreeBSD 14.0-CURRENT #0 ugen-ep-copyincap-n256372-c708375e636: Mon Jan  9 16:16:12 GMT 2023     jrtc4@technos.cl.cam.ac.uk:/local/scratch/jrtc4/libusb-cheribuild-root/build/cheribsd-morello-purecap-build/local/scratch/jrtc4/libusb-cheribuild-root/cheribsd/arm64.aarch64c/sys/GENERIC-MORELLO arm64
+```
+So this is a purecaps build.
+13. Go and test to see if it it fixes the issue that you've been having.
