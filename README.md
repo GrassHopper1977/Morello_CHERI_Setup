@@ -58,6 +58,8 @@ No, that's not true. Both builds can run with eitehr kernel and can run code bui
 Maybe not - this can happen for a number of reasons. Often, it is tempting to blame our code. I like to try my code out on a separate FreeBSD machine first and then I test it on Pure-Caps and Hybrid.
 ### I Can Compare Library Function Calls on hybrid and Pure-Cap Versions
 Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of teh whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on teh Slack channel first and then report it on GitHub.
+### How Do I Upgrade CheriBSD?
+There is no binary update mechanism on CheriBSD. What does this mean? It means the best way to update to teh latest version is backup everything that you want from the machine and reinstall from scratch.
 
 
 
