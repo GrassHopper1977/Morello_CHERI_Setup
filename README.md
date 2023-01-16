@@ -1,5 +1,5 @@
 # Morello CHERI Setup with FreeBSD
-My notes on setting up the Morello CHERI board with CheriBSD, upgrading it and various things I've noticed.
+My notes on setting up the Morello CHERI board with CheriBSD, upgrading it, using it communicate with actual hardware, and various things I've noticed.
 
 # CheriBSD and Morello Hardware
 If you are planning on integrating with external devices you should note:
@@ -27,7 +27,7 @@ If you are planning on integrating with external devices you should note:
 The Morello board has a USB type B connector on it. Connect from that to a PC runnning a suitable OS (I use Ubuntu with a GUI) and you will find that it adds 4 serial ports and the USB drive.
 
 ### The USB Drive
-The USB drive is teh Morello's onboard SD card. It is used to upgrade the frimware on the Morello board (which you should always do before installing an OS). The drive is called `M1SDP`.
+The USB drive is the Morello's onboard SD card. It is used to upgrade the frimware on the Morello board (which you should always do before installing an OS). The drive is called `M1SDP`.
 
 ### The Serial Ports
 The actual names of the serial ports will depend upon your OS. On Ubuntu they are called `/dev/ttyUSB0` to `/dev/ttyUSB3`. On *NIX systems like Linux and FreeBSD you may need to add your user to the `dialer` group in order to access these serial ports. The serial ports are all run at `115200` buad, 8 data bits, 1 stop bit, No parity and XON/XOFF flow control.
@@ -59,7 +59,7 @@ I've never used it. It looks like more debugging information.
 - I used the Pure-Capabilities ABI with the Hybrid Kernel (the dfeault) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
 
 ## Installing CheriBSD
-These are my [full installation instructions fro CheriBSD V22.12](installing.md).
+These are my [full installation instructions for CheriBSD V22.12](installing.md).
 
 
 
@@ -69,15 +69,15 @@ A list in maintained [here](https://ctsrd-cheri.github.io/cheribsd-getting-start
 # CheriBSD Notes
 ## Gotchas - Purecaps
 ### I've Installed the Purecaps Build so Everyhting is Secured
-No, it's not. If you use teh default kernel on the Pure-Caps build then you are still using the Hybris Kernel. You will need to change the kernel during the boot.
+No, it's not. If you use the default kernel on the Pure-Caps build then you are still using the Hybris Kernel. You will need to change the kernel during the boot.
 ### I'm Using Purecaps So I Can't Compile or Run Hybrid Code
-No, that's not true. Both builds can run with eitehr kernel and can run code built for either kernel.
+No, that's not true. Both builds can run with either kernel and can run code built for either kernel.
 ### Some of My Code Doesn't Work When Built for Purecaps but Works on Hybrid so My Code Is Wrong!
 Maybe not - this can happen for a number of reasons. Often, it is tempting to blame our code. I like to try my code out on a separate FreeBSD machine first and then I test it on Pure-Caps and Hybrid.
 ### I Can Compare Library Function Calls on hybrid and Pure-Cap Versions
-Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of teh whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on teh Slack channel first and then report it on GitHub.
+Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of the whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on the Slack channel first and then report it on GitHub.
 ### How Do I Upgrade CheriBSD?
-There is no binary update mechanism on CheriBSD. What does this mean? It means the best way to update to teh latest version is backup everything that you want from the machine and reinstall from scratch.
+There is no binary update mechanism on CheriBSD. What does this mean? It means the best way to update to the latest version is backup everything that you want from the machine and reinstall from scratch.
 
 
 
@@ -163,15 +163,15 @@ It's nothing complicated but I'll break down the commands here:
 - `-mabi=` - Is used to set the Application Binary Interface (for this machine it's `aapcs` for Hybrid mode and `purecap` for Pure-Caps mode)
 - `-cheri-bounds=subobject-safe`
 - `-lusb` - Include the libusb library
-- `-o testusb_pc` - Sets teh name of the output file to `testusb_pc`
+- `-o testusb_pc` - Sets the name of the output file to `testusb_pc`
 - `testusb.c` - Source files.
 
 # Trying out a Custom Kernel
 1. Navigate to our home directory: `cd ~`
 2. Use `wget` to get the tar file onto our machine: `wget https://www.cl.cam.ac.uk/~jrtc4/kernel.UGEN-TEST.tar.xz`
-3. Navigate to the root of teh file system: `cd /`
+3. Navigate to the root of the file system: `cd /`
 4. Now we need to unpack it into the root of our install: `tar -xf ~/kernel.UGEN-TEST-tar-xz`
-5. Now we can try rebooting and loading teh new kernel, which shoudl be called 1kernel.UGEN-TEST`
+5. Now we can try rebooting and loading the new kernel, which should be called 1kernel.UGEN-TEST`
 6. Enter `shutdown -r now` (don't forget to unplug any USB devices before rebooting)
 7. Wait for the CheriBSD Boot Menu:
 ```
@@ -199,7 +199,7 @@ It's nothing complicated but I'll break down the commands here:
  \-----------------------------------------/
 ```
 8. Press space to stop the countdown.
-9. Press 6 until teh kernel option reads: `6. Kernel: kernel.UGEN-TEST (5 of 5)`
+9. Press 6 until the kernel option reads: `6. Kernel: kernel.UGEN-TEST (5 of 5)`
 10. Now press enter to continue the boot sequence.
 11. Log in
 12. Use uname to check that we are running the new kernel:
