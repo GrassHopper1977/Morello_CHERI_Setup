@@ -78,10 +78,37 @@ Maybe not - this can happen for a number of reasons. Often, it is tempting to bl
 Probably not. When the OS is built they build everything twice. There is a purecaps version and a hybrid version of the whole library. If a library function isn't working on purecaps, you can't just compare what you're passing in each case as the memory addresses will be completely different and any structs will by aligned differently for purecaps. In general, if you'ev found something that work in Hybrid but not Purecaps then you have probably found a bug. Check on the Slack channel first and then report it on GitHub.
 ### How Do I Upgrade CheriBSD?
 There is no binary update mechanism on CheriBSD. What does this mean? It means the best way to update to the latest version is backup everything that you want from the machine and reinstall from scratch.
-
-
+### Do I Always Get An Exception When I Go Outside My Capability's Range?
+Yes and no. If you attempt to read or write beyond teh end of te rnage you will get an exception. However, code can now also check to see if you were going to go outside of a valid area and return an error before you do. An example of this would be `read()` which range checks how many bytes it about to fill your buffer with and returns `EFAULT` if you're going to go outside the valid range. There is a small demo project that I created showing this [here](https://github.com/GrassHopper1977/CherryBSD_USB_Serial_Issue). If you're unsure the comile both purecaps and hybrid versions of your code and compare them, that will give you a good idea of if it's a capabilities error or a regular error.
 
 ## How Do I use the Full-Caps Kernel?
+You have to change the kernel when you get to the CheriBSD boot menu:
+```
+    _____ _               _ ____   _____ _____
+   / ____| |             (_)  _ \ / ____|  __ \
+  | |    | |__   ___ _ __ _| |_) | (___ | |  | |
+  | |    | '_ \ / _ \ '__| |  _ < \___ \| |  | |
+  | |____| | | |  __/ |  | | |_) |____) | |__| |
+   \_____|_| |_|\___|_|  |_|____/|_____/|_____/
+                                                 ```                        `
+                                                s` `.....---.......--.```   -/
+ /---------- Welcome to CheriBSD ----------\    +o   .--`         /y:`      +.
+ |                                         |     yo`:.            :o      `+-
+ |  1. Boot Multi user [Enter]             |      y/               -/`   -o/
+ |  2. Boot Single user                    |     .-                  ::/sy+:.
+ |  3. Escape to loader prompt             |     /                     `--  /
+ |  4. Reboot                              |    `:                          :`
+ |  5. Cons: Serial                        |    `:                          :`
+ |                                         |     /                          /
+ |  Options:                               |     .-                        -.
+ |  6. Kernel: default/kernel (1 of 2)     |      --                      -.
+ |  7. Boot Options                        |       `:`                  `:`
+ |                                         |         .--             `--.
+ |                                         |            .---.....----.
+ \-----------------------------------------/
+   Autoboot in 0 seconds. [Space] to pause
+```
+I press space to pause then press 6 until the Kernel: shows one of the purecap builds (I use `6. kernel: kernel.GENERIC-MORELLO-PURECAP (4 of 4)`).
 
 ## CheriBSD Won't Boot!
 If you have a USB hub plugged when booting it causes an error that looks like this:
