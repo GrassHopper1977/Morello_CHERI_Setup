@@ -188,7 +188,7 @@ It's nothing complicated but I'll break down the commands here:
 - `-O2` - Optimisation level. This is a moderate optimisation level. See [here](https://www.freebsd.org/cgi/man.cgi?query=clang&sektion=1) for more details on this option.
 - `-Wall` - Display all warnings
 - `-mabi=` - Is used to set the Application Binary Interface (for this machine it's `aapcs` for Hybrid mode and `purecap` for Pure-Caps mode)
-- `-cheri-bounds=subobject-safe`
+- `-cheri-bounds=subobject-safe` - By default a sub-object within a struct would have the same boundaries as the struct, meaning that it is possible to write outside the area of the object. This option prevents that. For example imagine a struct contain an array of 4 chars followed by a uint16_t. A pointer to that struct would read the same as a pointer to the first item in the struct (in this case the array of 4 chars). By default, the capabilities would be the same, meaning that you could write beyond the end of the array and into the following uint16_t (but not beyond the end of the struct). This option would ensure that there are separate capabilties for the pointer to the struct and to the first item within the struct.
 - `-lusb` - Include the libusb library
 - `-o testusb_pc` - Sets the name of the output file to `testusb_pc`
 - `testusb.c` - Source files.
