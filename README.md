@@ -192,6 +192,11 @@ It's nothing complicated but I'll break down the commands here:
 - `-lusb` - Include the libusb library
 - `-o testusb_pc` - Sets the name of the output file to `testusb_pc`
 - `testusb.c` - Source files.
+
+## nano does have code folding or syntax highlighting!
+You can use sshfs to mount/map a local directory/drive to the drive on the using SSHFS [see our instructions on setting this up on CheriBSD here](sshfs.md).
+
+
 ## Understanding CHERI Code and CheriBSD (a CHERI tutorial)
 I highly recommend that you go through this tutorial. It's not written for Morello CHERI but you can still try the exercises by comiling for Hybrid or Purecaps. It will give you a good understanding of what CHERI can (and cannot) do: [Adversarial CHERI Exercises and Missions](https://ctsrd-cheri.github.io/cheri-exercises/cover/index.html)
 
