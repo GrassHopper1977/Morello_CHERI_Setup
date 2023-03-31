@@ -194,7 +194,7 @@ It's nothing complicated but I'll break down the commands here:
 - `testusb.c` - Source files.
 
 ## nano does have code folding or syntax highlighting!
-You can use sshfs to mount/map a local directory/drive to the drive on the using SSHFS [see our instructions on setting this up on CheriBSD here](sshfs.md).
+You can use sshfs to mount/map a local directory/drive to the drive on the using SSHFS [see our instructions on setting this up on CheriBSD here](sshfd.md).
 
 
 ## Understanding CHERI Code and CheriBSD (a CHERI tutorial)
