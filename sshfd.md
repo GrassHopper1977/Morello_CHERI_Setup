@@ -18,7 +18,7 @@ sudo sshfs -o allow_other,default_permissions root@server_name:/root/ /mnt/morel
 ```
 
 # Windows 11
-NOTE: This deosn't work for me on Windows 11. I suspect we may need to specify the full path e.g. `\\sshfs\root@192.168.1.181/root/` or `\\sshfs\root@192.168.1.181\root\`
+NOTE: This doesn't work for me on Windows 11. I suspect we may need to specify the full path e.g. `\\sshfs\root@192.168.1.181/root/` or `\\sshfs\root@192.168.1.181\root\`
 I use Winget (https://github.com/microsoft/winget-cli) to install the tools.
 1. Install WinFsp. From the command line: `winget install WinFsp.WinFsp`
 2. Install SSHFS For Windows. From the command line: `winget install SSHFS-Win.SSHFS-Win`
