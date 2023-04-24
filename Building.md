@@ -3,9 +3,9 @@
 Various ways to build CheriBSD.
 
 ## Sources
-https://github.com/CTSRD-CHERI/cheribuild
-https://ctsrd-cheri.github.io/cheri-exercises/introduction/cross-compilation-execution.html
-https://github.com/CTSRD-CHERI/cheripedia/wiki/HOWTO:-Build-CheriBSD-natively-on-Morello
+* https://github.com/CTSRD-CHERI/cheribuild
+* https://ctsrd-cheri.github.io/cheri-exercises/introduction/cross-compilation-execution.html
+* https://github.com/CTSRD-CHERI/cheripedia/wiki/HOWTO:-Build-CheriBSD-natively-on-Morello
 
 ## Building on Ubuntu
 I'm using Ubuntu V18.04.6 LTS and cross compiling it for the Morello CHERI board. 
