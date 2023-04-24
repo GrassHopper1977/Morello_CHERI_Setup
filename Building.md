@@ -8,7 +8,9 @@ https://ctsrd-cheri.github.io/cheri-exercises/introduction/cross-compilation-exe
 https://github.com/CTSRD-CHERI/cheripedia/wiki/HOWTO:-Build-CheriBSD-natively-on-Morello
 
 ## Building on Ubuntu
-I'm using Ubuntu V18.04.6 LTS and cross compiling it for the Morello CHERI board.
+I'm using Ubuntu V18.04.6 LTS and cross compiling it for the Morello CHERI board. 
+
+Note: I had to update my version of cmake follwing these instructions: https://askubuntu.com/questions/355565/how-do-i-install-the-latest-version-of-cmake-from-the-command-line
 ### Installing Pre-requistes and Configuring
 1. Fetch the prerequistes: `sudo apt install autoconf automake libtool pkg-config clang bison cmake mercurial ninja-build samba flex texinfo time libglib2.0-dev libpixman-1-dev libarchive-dev libarchive-tools libbz2-dev libattr1-dev libcap-ng-dev libexpat1-dev libgmp-dev'
 2. Clone CheriBuild: `git clone https://github.com/CTSRD-CHERI/cheribuild.git`
