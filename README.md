@@ -79,7 +79,7 @@ Probably not. When the OS is built they build everything twice. There is a purec
 ### How Do I Upgrade CheriBSD?
 There is no binary update mechanism on CheriBSD. What does this mean? It means the best way to update to the latest version is backup everything that you want from the machine and reinstall from scratch.
 ### Do I Always Get An Exception When I Go Outside My Capability's Range?
-Yes and no. If you attempt to read or write beyond teh end of te rnage you will get an exception. However, code can now also check to see if you were going to go outside of a valid area and return an error before you do. An example of this would be `read()` which range checks how many bytes it about to fill your buffer with and returns `EFAULT` if you're going to go outside the valid range. There is a small demo project that I created showing this [here](https://github.com/GrassHopper1977/CheriBSD_Example_Error). If you're unsure the comile both purecaps and hybrid versions of your code and compare them, that will give you a good idea of if it's a capabilities error or a regular error.
+Yes and no. If you attempt to read or write beyond the end of the range you will get an exception. However, code can now also check to see if you were going to go outside of a valid area and return an error before you do. An example of this would be `read()` which range checks how many bytes it about to fill your buffer with and returns `EFAULT` if you're going to go outside the valid range. There is a small demo project that I created showing this [here](https://github.com/GrassHopper1977/CheriBSD_Example_Error). If you're unsure the comile both purecaps and hybrid versions of your code and compare them, that will give you a good idea of if it's a capabilities error or a regular error.
 
 ## How Do I use the Full-Caps Kernel?
 You have to change the kernel when you get to the CheriBSD boot menu:
@@ -109,6 +109,8 @@ You have to change the kernel when you get to the CheriBSD boot menu:
    Autoboot in 0 seconds. [Space] to pause
 ```
 I press space to pause then press 6 until the Kernel: shows one of the purecap builds (I use `6. kernel: kernel.GENERIC-MORELLO-PURECAP (4 of 4)`).
+
+You can also change the default kernel by adding the line `kernel="..."` to /boot/loader.conf. The name must be a subdirectory of /boot that contains a kernel. e.g kernel, kernel.GENERIC-MORELLO-PURECAP, etc.
 
 ## CheriBSD Won't Boot!
 If you have a USB hub plugged when booting it causes an error that looks like this:
