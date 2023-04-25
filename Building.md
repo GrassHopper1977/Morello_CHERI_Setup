@@ -19,8 +19,11 @@ Note: I had to update my version of cmake follwing these instructions: https://a
 4. Now we'll try to build CheriBSD for Morello in Purecap: `./cheribuild.py cheribsd-morello-purecap -d`
 5. The build will take a few hours as it's a clean build. It will automatically clone the `main` branch of the [CheriBSD repository](https://github.com/CTSRD-CHERI/cheribsd) and then build the code.
 6. Assuming this works, the followig will happen:
-* Any sources will be stored in: `/home/[USER]/cheri`
-* The output files will be stored in: `/home/[USER]/cheri/output`
+   * Any sources will be stored in: `/home/[USER]/cheri`
+   * The output files will be stored in: `/home/[USER]/cheri/output`
 
 ### Performing an Incremental Build
-Since it takes several hours to perform a clean build so this may not be useful all the time. An incremental build may be more useful if we just want to make simple changes to the kernel to try them. We believe the command will be: `./cheribuild.py cheribsd-morello-purecap --no-clean` You.ll note that we don't use `-d` as that means "build all dependencies" which may make the build longer.
+Since it takes several hours to perform a clean build so this may not be useful all the time. An incremental build may be more useful if we just want to make simple changes to the kernel to try them. You'll note that we don't use `-d` as that means "build all dependencies" which may make the build longer. The command I use is:
+```
+./cheribuild.py cheribsd-morello-purecap --no-clean
+```
