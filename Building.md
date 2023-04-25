@@ -29,6 +29,7 @@ Since it takes several hours to perform a clean build so this may not be useful 
 ```
 
 ### Building a Different Branch
+NOTE: This is returning an error at present. We're still investigating why.
 1. After performing the initial build, you can use `git` to switch to another branch. In this example we'll switch to `dev` (which is where most of the work is done and we currently need in order to get the USB fix that was fixed [here](https://github.com/CTSRD-CHERI/cheribsd/pull/1619/commits/c708375e636a6a80468eda19a9beebe9c1d618cb)). At the time that this document was written, `dev` was over 10000 commits ahead of `main`. This gives you an idea of howimportant teh `dev` branch is for getting the latest features and fixes.
 2. Change to your local source folder: `cd /home/[USER]/cheri/cheribsd`
 3. You can obtain a list of exisitng local branches using the following (first time it only show `main` as an available branch):
