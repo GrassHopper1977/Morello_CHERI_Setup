@@ -7,8 +7,18 @@ Various ways to build CheriBSD.
 * https://ctsrd-cheri.github.io/cheri-exercises/introduction/cross-compilation-execution.html
 * https://github.com/CTSRD-CHERI/cheripedia/wiki/HOWTO:-Build-CheriBSD-natively-on-Morello
 
+## Notes On CheriBSD Repository Branches
+CheriBSD is based on FreeBSD which has been around for years and has moved through several different Version Control Systems. Consequently, it has a slightly non-obvious structure. In most git repositiories, new features would be added on branches which would then be merged into main and a Tag would be made for each new release. CheriBSD is slightly different.
+* Development takes place in new branches.
+* Working features are merged in the `dev` branch and the feature branches are deleted.
+* For a release, a tag would still be created and that is based on the `main` branch.
+* Releases are created on a `releng` branch (perhaps from "release to engineering"?). For example, `releng/22.12` is the release branch for V22.12 which may be different from the version on `main`.
+* The `releng` branch may be updated multiple times with teh new releases organised by date.
+* This means that the `releng` branch may be ahead of both `main` and the Tag upon which it was originally based.
+* Certain features can be cherry picked from the `dev` branch and merged into `releng` branches to fix issues as they appear.
+
 ## Building on Ubuntu
-I'm using Ubuntu V18.04.6 LTS and cross compiling it for the Morello CHERI board. 
+For this example I'm using Ubuntu V18.04.6 LTS and cross compiling it for the Morello CHERI board. 
 
 Note: I had to update my version of cmake follwing these instructions: https://askubuntu.com/questions/355565/how-do-i-install-the-latest-version-of-cmake-from-the-command-line
 
@@ -29,8 +39,8 @@ Since it takes several hours to perform a clean build so this may not be useful 
 ```
 
 ### Building a Different Branch
-NOTE: This is returning an error at present. We're still investigating why.
-1. After performing the initial build, you can use `git` to switch to another branch. In this example we'll switch to `dev` (which is where most of the work is done and we currently need in order to get the USB fix that was fixed [here](https://github.com/CTSRD-CHERI/cheribsd/pull/1619/commits/c708375e636a6a80468eda19a9beebe9c1d618cb)). At the time that this document was written, `dev` was over 10000 commits ahead of `main`. This gives you an idea of howimportant teh `dev` branch is for getting the latest features and fixes.
+Note: We're still having an issue building this. I'm working on it.
+1. After performing the initial build, you can use `git` to switch to another branch. In this example we'll switch to `releng/22.12` (which is the current release). 
 2. Change to your local source folder: `cd /home/[USER]/cheri/cheribsd`
 3. You can obtain a list of exisitng local branches using the following (first time it only show `main` as an available branch):
 ```
@@ -39,9 +49,9 @@ git branch
 ```
 4. Switch branch using to `dev`:
 ```
-git checkout dev
+git checkout releng/22.12
 ```
-5. We should now be using the `dev` branch. If you're careful (or paranoid) you can use `git log` to double check that you have the expected commit by comparing the ID with the one on the CheriBSD github page.
+5. We should now be using the `git checkout releng/22.12` branch. If you're careful (or paranoid) you can use `git log` to double check that you have the expected commit by comparing the ID with the one on the CheriBSD github page.
 6. Now we may want to build this branch (we may also want to include the dependancies). Remember that the `cheribuild` command will need to be executed from the `cheribuild` directory. We're only going to build teh items that have changed:
 ```
 ./cheribuild.py cheribsd-morello-purecap --no-clean
