@@ -59,7 +59,7 @@ I've never used it. It looks like more debugging information.
 - I used the Pure-Capabilities ABI with the Hybrid Kernel (the dfeault) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
 
 ## Installing CheriBSD
-These are my [full installation instructions for CheriBSD V22.12](installing.md).
+These are my [full installation instructions for CheriBSD V22.12](Installing.md).
 
 
 
