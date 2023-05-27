@@ -190,6 +190,7 @@ x     < Yes >   < No >          x
 mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
 ```
 Just select Yes and press Enter
+
 25. You will be asked to create the root password. Choose a suitable password and save it in a password manager so you don't lose it.
 26. You will be asked if you want to configur ethe Ethernet networking. I would suggest that you do. Select `OK` and press Enter.
 27. Would you like to configure IPv4 for this interface? Select `Yes` and press Enter.
