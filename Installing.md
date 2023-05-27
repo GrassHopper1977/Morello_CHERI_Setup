@@ -279,6 +279,7 @@ Just select Yes and press Enter
                                                          mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
 ```
 Select `Reboot` and press Enter.
+
 49. Now that you've pressed Enter you can safely remove the USB stick. It is possible that it won't reboot on it's own. Wait until you get teh message about your uptime - after that you can safely force the reboot from the MCC (serial port 0) by typing `reboot`.
 50. The boot menu will appear. Either wait for the timeout or press enter to boot in the default (Hybrid) kernel.
 ```    _____ _               _ ____   _____ _____
