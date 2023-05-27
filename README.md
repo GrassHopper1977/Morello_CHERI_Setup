@@ -24,14 +24,14 @@ If you are planning on integrating with external devices you should note:
   3. Linux - I haven't tried this either.
 
 ## Connecting to the Morello Board
-The Morello board has a USB type B connector on it. Connect from that to a PC runnning a suitable OS (I use Ubuntu with a GUI) and you will find that it adds 4 serial ports and the USB drive.
+The Morello board has a USB type B connector on it. Connect from that to a PC runnning a suitable OS (I use Ubuntu with a GUI) and you will find that it adds 8 serial ports and the USB drive.
 
 ### The USB Drive
 The USB drive is the Morello's onboard SD card. It is used to upgrade the frimware on the Morello board (which you should always do before installing an OS). The drive is called `M1SDP`.
 
 ### The Serial Ports
 The actual names of the serial ports will depend upon your OS. On Ubuntu they are called `/dev/ttyUSB0` to `/dev/ttyUSB3`. On *NIX systems like Linux and FreeBSD you may need to add your user to the `dialer` group in order to access these serial ports. The serial ports are all run at `115200` buad, 8 data bits, 1 stop bit, No parity and XON/XOFF flow control.
-each port provide different functionality.
+Each of the ports provide different functionality.
 
 #### Serial Port 0 - MCC
 The is the MCC Morello Management Controller. We can use this to set the clock, reboot 
@@ -40,11 +40,23 @@ The is the MCC Morello Management Controller. We can use this to set the clock, 
 ### Serial Port 1 - PCC
 I have no idea what this is used for. It look slike debugging inforamtion.
 
-### Serial Port 2 - Morello System Console
+### Serial Port 2 - Morello System Console (aka AP0)
 This is where we will be able to access our CheriBSD installation's console. Remember that some of the CheriBSD builds don't have a driver for the HDMI yet (fixed from V22.12 but there are reports of issues still).
 
-### Serial port 3 - ?
+### Serial port 3 - SCP
 I've never used it. It looks like more debugging information.
+
+### Serial port 4 - MCP
+I've never used it.
+
+### Serial port 5 - IOFPGA1
+I've never used it.
+
+### Serial port 6 - IOFPGA2
+I've never used it.
+
+### Serial port 7 - AP2 (Secure)
+I've never used it.
 
 ## Notes on CheriBSD
 - Until V22.12 there was no desktop environment. There's not a lot of notes on using the desktop because of this fact.
