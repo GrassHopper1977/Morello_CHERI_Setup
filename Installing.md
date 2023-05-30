@@ -359,8 +359,8 @@ If the package is just a background task or it is critical that it works (e.g. `
 So you've installed CheriBSD but you want to write some code and commit changes to a repository so we're going to need to install the compiler and git and go through setting them all up.
 
 ### 1. Install GIT
-1. Enter this `pkg64 install git`
-2. If you have some code on GitHub to check out then, you may wish to save your GitHub credentials locally on the machine (my machine is behind a firewall and therefor reasonably safe). The best way to do this is to create a personal access token to use instead of a password.
+1. Enter this `pkg64c install git`
+2. If you have some code on GitHub to check out then, you may wish to save your GitHub credentials locally on the machine (my machine is behind a firewall and therefore reasonably safe). The best way to do this is to create a personal access token to use instead of a password.
 3. Instructions for creating a personal access token can be found [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 4. From your account (or root) home directory:
 ```
@@ -370,8 +370,8 @@ git clone <PATH TO REPO>
 ```
 5. When prompted enter your username and use your personal Access Token for the password.
 ### 2. Install nano
-`pkg64 install nano`
+`pkg64c install nano`
 ### 3. Install Compiler & Debugger
 `pkg64 install llvm-base`
 ### 4. (Optional) Install wget
-`pkg64 install wget`
+`pkg64c install wget`
