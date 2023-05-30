@@ -77,7 +77,7 @@ It will reboot several times and will update. you can watch it happening from th
 
 # Installing CheriBSD
 We follow the basic instructions from [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/getting/index.html) but with my own notes. The CheriBSD install instrcutions are much easier to follow than the ARM firmware instructions.
-1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/)
+1. We need to download the memstick image of the latest CheriBSD build from [here](https://www.cheribsd.org/). However, the version shown there is the original V22.12 and, since then, they have released some more patches which have the same version number (V22.12) which are not listed on the main page but can be found [here](https://download.cheribsd.org/snapshots/releng/22.12/arm64/aarch64c/) instead. If you are going to be using the USB then you will need the latest version which contains the fix.
 2. IMPORTANT! If you haven't yet updated the firmware of the Morello board go back and do that now.
 3. Write the disk image that you've downloaded onto an SD card. Ubuntu has a UI for this if you just click the file. Otherwise you can do it from the console by executing something like this (change DISK to the name of your USB stick):
 ```
