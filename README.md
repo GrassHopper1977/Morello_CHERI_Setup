@@ -81,7 +81,7 @@ A list in maintained [here](https://ctsrd-cheri.github.io/cheribsd-getting-start
 # CheriBSD Notes
 ## Gotchas - Purecaps
 ### I've Installed the Purecaps Build so Everyhting is Secured
-No, it's not. If you use the default kernel on the Pure-Caps build then you are still using the Hybris Kernel. You will need to change the kernel during the boot.
+No, it's not. If you use the default kernel on the Pure-Caps build then you are still using the Hybrid Kernel. You will need to change the kernel during the boot.
 ### I'm Using Purecaps So I Can't Compile or Run Hybrid Code
 No, that's not true. Both builds can run with either kernel and can run code built for either kernel.
 ### Some of My Code Doesn't Work When Built for Purecaps but Works on Hybrid so My Code Is Wrong!
@@ -256,4 +256,5 @@ root@cheribsd:~ # uname -a
 FreeBSD cheribsd.local 14.0-CURRENT FreeBSD 14.0-CURRENT #0 ugen-ep-copyincap-n256372-c708375e636: Mon Jan  9 16:16:12 GMT 2023     jrtc4@technos.cl.cam.ac.uk:/local/scratch/jrtc4/libusb-cheribuild-root/build/cheribsd-morello-purecap-build/local/scratch/jrtc4/libusb-cheribuild-root/cheribsd/arm64.aarch64c/sys/GENERIC-MORELLO arm64
 ```
 So this is a purecaps build.
+
 13. Go and test to see if it it fixes the issue that you've been having.
