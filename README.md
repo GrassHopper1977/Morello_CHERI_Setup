@@ -68,12 +68,18 @@ I've never used it.
   1. Hybrid
   2. Pure-Capabilities
 - Using the Hybrid versions of both is the most likely to work but doesn't give you much in the way of additional protection.
-- I used the Pure-Capabilities ABI with the Hybrid Kernel (the dfeault) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
+- I used the Pure-Capabilities ABI with the Hybrid Kernel (the default) not realising that I wasn't using the Pure-Caps kernel. You can choose a different kernel from the FreeBSD boot menu, but we'll go through that later.
 
 ## Installing CheriBSD
 These are my [full installation instructions for CheriBSD V22.12](Installing.md).
 
-
+## SSH as Root
+You can use SSH with CheriBSD. By default you can't SSH as root for (obvious) security reasons. However, if you fancy living dangerously you can enabled SSH access as root by:
+1. Use `nano /etc/ssh/sshd_config`
+2. Find the line: `#PermitRootLogin no`
+3. Change it to read `PermitRootLogin yes`
+4. Save and exit
+5. Restart sshd: `/etc/rc.d/sshd restart`
 
 ## Known Issue with Morello
 A list in maintained [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/morello-issues/index.html).
