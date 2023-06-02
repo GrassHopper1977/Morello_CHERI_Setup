@@ -1,4 +1,4 @@
-# Morello CHERI Setup with FreeBSD
+# Morello CHERI Setup with CheriBSD
 My notes on setting up the Morello CHERI board with CheriBSD, upgrading it, using it communicate with actual hardware, and various things I've noticed.
 
 # CheriBSD and Morello Hardware
@@ -11,9 +11,14 @@ If you are planning on integrating with external devices you should note:
 - If you are trying to talk to a USB device that doesn't already have a driver then you can either write you have three choices:
   1. Create your own hardware (or find some pre-existing hardware) that can convert serial to whatever protocol you need.
   2. Write you own USB driver. This doesn't look as difficult as you might think. There is a guide [here](https://freebsdfoundation.org/wp-content/uploads/2021/11/Simple_USB_Driver_for_FreeBSD.pdf). This guide also discusses how to sniff USB packets to aid in writing a driver.
-  3. Use [libusb](https://libusb.info/) - this library is pretty standardised so the same code shoudl function in the same way on Linux, FreeBSD, CheriBSD & Windows.
-- There is a USB bug in V22.05 & V22.12 that prevents USB Bulk data from working but there is now a custom kernel to fix it (you just have to ask on the CheriBSD Slack channel). If you are interested the ticket for this issue can be found [here](https://github.com/CTSRD-CHERI/cheribsd/issues/1616).
+  3. Use [libusb](https://libusb.info/) - this library is pretty standardised so the same code should function in the same way on Linux, FreeBSD, CheriBSD & Windows.
+- There is a USB bug in V22.05 & V22.12 (1st release) that prevents USB Bulk data from working (If you are interested the ticket for this issue can be found [here](https://github.com/CTSRD-CHERI/cheribsd/issues/1616)). The bug is fixed in the 3rd March 2023 releng build of V22.12.
 - There are drivers for some USB to I2C devices though I have yet to try them. For example [CP2112](https://www.freebsd.org/cgi/man.cgi?query=cp2112&sektion=4) is supported.
+- The Morello CHERI demonstrator:
+![IMG_1967-removebg-preview](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/493498fa-162f-4649-a543-20f87d2979de)
+- The main PCB:
+![IMG_1970](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/3aed88a2-621c-409c-a8c1-3d4edbc1be5a)
+
 
 # Installing an Operating System
 ## Before You Start
@@ -22,6 +27,30 @@ If you are planning on integrating with external devices you should note:
   1. CheriBSD - A CHERIfied version of FreeBSD. This is the most developed, most complete and the only one I've played with.
   2. Android - I haven't tried this.
   3. Linux - I haven't tried this either.
+
+## Setting Up the Morello CHERI hardware
+This is relatively easy but there are a few things to be aware of. The Morello CHERI demonstrator board comes with some instructions from ARM but they have been causing some confusion. It is best to come back to them at a later stage.
+<details>
+<summary>Step by step setting up the Morello CHERI hardware</summary>
+
+IMPORTANT! Do not discard any of the packaging or spares. You will be expected to return the Morello CHERI with all it's parts in the original packaging at the end of the program.
+
+1. Before starting you will need:
+   1. A keyboard and mouse
+   2. A monitor is optional since the setup is performed using the built-in USB serial port
+2. When opening the box you will find some instructions from ARM, it may be best to ignore them for now.![IMG_1597](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/c5309bf0-d77f-4ac2-98db-ace4ca961dd2)
+3. You will find that the Morello CHERI demonstrator has already been aseembled for you. You will find a box containing all the spares.![IMG_1599](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/0a541ee5-0bf8-4cfd-8205-b3e2af09c0c4)
+4. Remove the Morello CHERI from the cardboard box that it came in.![IMG_1600](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/aa2fd4a6-28e5-4018-9297-b8f5f9114426)
+5. Remove the cable tie from the fan on the pack of the box.![IMG_1603](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/6d21789c-f2a9-4de5-9669-e9a3cacc5fcf)
+6. From the box of parts you will need:
+    1. The power cable
+    2. A USB Type A to type B cable
+    3. An ethernet cable![IMG_1606](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/6aabc322-8b21-4d05-859b-1b07ec4dfaed)
+7. Plug in the ethernet cable (Note: there are two RJ45s on the back of the Morello CHERI, use the one labelled "GbE"). This is a Gigabit ethernet port, if you have hardware that will support that.![IMG_1611](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/9aa11b4a-ae50-4f72-a599-b94a0b821348)
+8. Plug the USB type B cable into the port labelled "DBG USB". This will give us access to the 8 virtual serial ports that we can use to set up and monitor the Morello CHERI.![IMG_1612](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/a954c7c3-380e-4ade-ab5d-d73c1d78d7e9)
+9. Remove the stopper from the power socket.![IMG_1615](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/00d462c6-ff45-4106-99ac-f8d84c546a0d)
+10. Plug in the power.![IMG_1616](https://github.com/GrassHopper1977/Morello_CHERI_Setup/assets/52569451/c269a9a3-6fd8-4332-9525-f8ef4da9388a)
+</details>
 
 ## Connecting to the Morello Board
 The Morello board has a USB type B connector on it. Connect from that to a PC runnning a suitable OS (I use Ubuntu with a GUI) and you will find that it adds 8 serial ports and the USB drive.
